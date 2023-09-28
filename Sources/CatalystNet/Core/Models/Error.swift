@@ -11,6 +11,7 @@ public enum CatalystError<E>: Error {
     case noInternetConnection
     case unauthorized
     case forbidden
+    case serverError
     case other(_ message: String?)
     case unsupportedResource
     case custom(_ error: E?)

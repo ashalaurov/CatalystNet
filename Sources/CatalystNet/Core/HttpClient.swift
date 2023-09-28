@@ -86,6 +86,8 @@ open class HttpClient {
                     completion(.failure(.unauthorized))
                 } else if statusCode == 403 {
                     completion(.failure(.forbidden))
+                } else if (500 ..< 600) ~= statusCode {
+                    completion(.failure(.serverError))
                 } else {
                     completion(.failure(.other("Unknown")))
                 }
