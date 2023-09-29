@@ -136,6 +136,8 @@ open class HttpClient {
                 completion(.failure(.unauthorized))
             } else if statusCode == 403 {
                 completion(.failure(.forbidden))
+            } else if (500 ..< 600) ~= statusCode {
+                completion(.failure(.serverError))
             } else if let error = data.flatMap(resource.parseError) {
                 completion(.failure(.custom(error)))
             } else {
@@ -215,6 +217,8 @@ extension HttpClient {
                 throw CatalystError<E>.unauthorized
             } else if statusCode == 403 {
                 throw CatalystError<E>.forbidden
+            } else if (500 ..< 600) ~= statusCode {
+                completion(.failure(.serverError))
             } else if let error = resource.parseError(data) {
                 throw CatalystError<E>.custom(error)
             } else {
