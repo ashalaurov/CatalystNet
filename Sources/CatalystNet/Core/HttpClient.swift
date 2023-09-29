@@ -218,7 +218,7 @@ extension HttpClient {
             } else if statusCode == 403 {
                 throw CatalystError<E>.forbidden
             } else if (500 ..< 600) ~= statusCode {
-                completion(.failure(.serverError))
+                throw CatalystError<E>.serverError
             } else if let error = resource.parseError(data) {
                 throw CatalystError<E>.custom(error)
             } else {
